@@ -49,7 +49,7 @@ func main_() (int, error) {
 func main() {
 	ret, err := main_()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 		os.Exit(ret)
 	}
 }
