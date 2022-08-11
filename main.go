@@ -43,7 +43,7 @@ func main_() (int, error) {
 
 	fmt.Print(string(t))
 
-	return 1, nil
+	return 0, nil
 }
 
 func main() {
