@@ -14,9 +14,13 @@ func main_() (int, error) {
 		Input string `short:"i" long:"input" description:"Input file" default:"-"`
 	}
 
-	_, err := flags.Parse(&opts)
+	args, err := flags.Parse(&opts)
 	if err != nil {
 		return 1, err
+	}
+
+	if len(args) > 0 {
+		return 1, fmt.Errorf("unexpected argument: %q", args[0])
 	}
 
 	var r io.Reader
