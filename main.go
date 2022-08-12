@@ -42,6 +42,9 @@ func main_() (int, error) {
 		line := scanner.Text()
 		fmt.Println(line)
 	}
+	if err := scanner.Err(); err != nil {
+		return 1, err
+	}
 
 	return 0, nil
 }
