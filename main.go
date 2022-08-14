@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"io"
 	"log"
@@ -46,12 +45,11 @@ func main_() (int, error) {
 		return 1, err
 	}
 
-	scanner := bufio.NewScanner(r)
-	for scanner.Scan() {
-		line := scanner.Text()
-		fmt.Println(line)
+	l := NewLineiter(r)
+	for l.HasNext() {
+		fmt.Println(l.Next())
 	}
-	if err := scanner.Err(); err != nil {
+	if err := l.Err(); err != nil {
 		return 1, err
 	}
 
