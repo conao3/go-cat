@@ -9,17 +9,16 @@ import (
 	flags "github.com/jessevdk/go-flags"
 )
 
-func file_or_stdin(filepath string) (io.Reader, error) {
-	var r io.Reader
+func file_or_stdin(filepath string) (io.ReadCloser, error) {
+	var r io.ReadCloser
 	switch filepath {
 	case "", "-":
-		r = os.Stdin
+		r = io.NopCloser(os.Stdin)
 	default:
 		f, err := os.Open(filepath)
 		if err != nil {
 			return nil, err
 		}
-		defer f.Close()
 		r = f
 	}
 
@@ -44,6 +43,7 @@ func main_() (int, error) {
 	if err != nil {
 		return 1, err
 	}
+	defer r.Close()
 
 	l := NewLineiter(r)
 	for l.HasNext() {
