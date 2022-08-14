@@ -9,7 +9,7 @@ import (
 	flags "github.com/jessevdk/go-flags"
 )
 
-func file_or_stdin(filepath string) (io.ReadCloser, error) {
+func NewReader(filepath string) (io.ReadCloser, error) {
 	var r io.ReadCloser
 	switch filepath {
 	case "", "-":
@@ -39,7 +39,7 @@ func main_() (int, error) {
 		return 1, fmt.Errorf("unexpected argument: %q", args[0])
 	}
 
-	r, err := file_or_stdin(opts.Input)
+	r, err := NewReader(opts.Input)
 	if err != nil {
 		return 1, err
 	}
