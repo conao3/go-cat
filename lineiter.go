@@ -18,31 +18,25 @@ func NewLineiter(reader io.Reader) *Lineiter {
 }
 
 func (l *Lineiter) HasNext() bool {
-	var buf bytes.Buffer
-	l.buf = buf
+	l.buf.Reset()
 	for {
 		line, isPrefix, err := l.reader.ReadLine()
-
-		_, err2 := buf.Write(line)
-		if err2 != nil {
-			l.err = err2
+		if err != nil {
+			if err != io.EOF {
+				l.err = err
+			}
 			return false
 		}
 
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
+		if _, err := l.buf.Write(line); err != nil {
 			l.err = err
 			return false
 		}
 
 		if !isPrefix {
-			break
+			return true
 		}
 	}
-
-	return true
 }
 
 func (l Lineiter) Next() string {
