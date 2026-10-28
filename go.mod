@@ -1,6 +1,6 @@
 module github.com/conao3/go-cat
 
-go 1.26.9
+go 1.27.2
 
 require github.com/jessevdk/go-flags v1.6.1
 
